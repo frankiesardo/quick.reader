@@ -1,0 +1,156 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Enable class-based dark mode (html.dark) instead of prefers-color-scheme */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Libre Baskerville", ui-serif, Georgia, serif;
+}
+
+:root {
+  --highlight-yellow: #fef08a;
+  --highlight-green: #86efac;
+  --highlight-blue: #7dd3fc;
+  --highlight-pink: #f9a8d4;
+  --highlight-purple: #d8b4fe;
+
+  /* Dynamic viewport height with fallback chain for mobile browser chrome */
+  --app-height: 100vh;
+}
+
+/* Use dvh (dynamic viewport height) where supported - adjusts with mobile browser chrome */
+@supports (height: 100dvh) {
+  :root {
+    --app-height: 100dvh;
+  }
+}
+
+html,
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  color-scheme: light;
+}
+
+/* Dark mode styles */
+html.dark,
+html.dark body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+  color-scheme: dark;
+}
+
+/* Ensure full height for reader - uses dynamic viewport height on mobile */
+html,
+body,
+#root {
+  min-height: var(--app-height);
+  height: var(--app-height);
+}
+
+/* Utility class for full dynamic viewport height */
+.h-app {
+  height: var(--app-height);
+}
+
+/* Highlight popup animation (desktop - floating) */
+@keyframes popup-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.highlight-popup {
+  animation: popup-enter 150ms ease-out;
+}
+
+/* Highlight popup animation (mobile - slide down from top) */
+@keyframes popup-slide-down-mobile {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.highlight-popup-mobile-top {
+  animation: popup-slide-down-mobile 200ms ease-out;
+}
+
+/* Search modal animations */
+@keyframes search-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes search-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-modal-backdrop {
+  animation: search-fade-in 150ms ease-out;
+}
+
+.search-modal {
+  animation: search-slide-down 200ms ease-out;
+}
+
+/* Chat drawer animations */
+@keyframes chat-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.chat-drawer {
+  animation: chat-slide-in 150ms ease-out;
+}
+
+/* Spinner for extracting state */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Safe area utility classes for iOS notch/home indicator */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-right {
+  padding-right: env(safe-area-inset-right);
+}
